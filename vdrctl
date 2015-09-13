@@ -124,8 +124,8 @@ sub list_disabled {
 sub enable {
   my $configfiles_ref = shift;
   foreach my $plugin (@_) {
-    my $filename = basename($configfiles_ref->{$plugin}->{available})
-      or die("$plugin is unknown\n");
+    die("$plugin is unknown\n") unless $configfiles_ref->{$plugin}->{available};
+    my $filename = basename($configfiles_ref->{$plugin}->{available});
 
     # $file may be not the exact filename.
     symlink(abs2rel("$availdir/$filename", $argsdir), "$argsdir/$filename")
@@ -136,8 +136,8 @@ sub enable {
 sub disable {
   my $configfiles_ref = shift;
   foreach my $plugin (@_) {
-    my $filename = basename($configfiles_ref->{$plugin}->{enabled})
-      or die("$plugin is unknown\n");
+    die("$plugin is unknown or already disabled\n") unless $configfiles_ref->{$plugin}->{enabled};
+    my $filename = basename($configfiles_ref->{$plugin}->{enabled});
 
     # Unlink only if it is a symlink or --force is set.
     if (-l "$argsdir/$filename" or $force) {
