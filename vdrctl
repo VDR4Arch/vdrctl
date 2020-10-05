@@ -43,7 +43,7 @@ GetOptions(
 
     # Try name.conf
     ($name) = basename($file) =~ /^(.*?).conf$/ unless $name;
-    ($priority) = $default_priority unless $priority;
+    $priority = $default_priority unless $priority;
 
     $configfiles{$name}{available} = $file;
     $configfiles{$name}{priority} = $priority;
@@ -56,7 +56,7 @@ GetOptions(
 
     # Try name.conf
     ($name) = basename($file) =~ /^(.*?).conf$/ unless $name;
-    ($priority) = $default_priority unless $priority;
+    $priority = $default_priority unless $priority;
 
     $configfiles{$name}{enabled} = $file;
     $configfiles{$name}{priority} = $priority;
@@ -144,7 +144,7 @@ sub enable {
     }
 
     # $file may be not the exact filename.
-    unless ($configfiles_ref->{$plugin}->{enabled} and !$force_prio) {
+    unless ($configfiles_ref->{$plugin}->{enabled} && !$force_prio) {
       symlink(abs2rel("$availdir/$filename", $argsdir), "$argsdir/$priority-$plugin.conf")
         or die "Cannot create symlink to $argsdir/$priority-$plugin.conf\n";
     }
