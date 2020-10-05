@@ -6,7 +6,7 @@ use File::Basename;
 use File::Spec::Functions qw(abs2rel);
 use File::Temp qw(tempfile);
 use Getopt::Long qw(:config pass_through);
-use Pod::PlainText;
+use Pod::Simple::Text;
 use Term::ANSIColor;
 
 my $PROGNAME = 'vdrctl';
@@ -218,7 +218,7 @@ sub edit {
 }
 
 sub help {
-  Pod::PlainText->new(sentence => 0)->parse_from_file($0);
+  Pod::Simple::Text->filter($0);
   exit;
 }
 
